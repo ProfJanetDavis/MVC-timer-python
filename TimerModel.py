@@ -3,7 +3,12 @@ import time
 from ObserverPattern import Subject, Observer
 
 class TimerModel(Subject):
-   """Implements a countdown timer with a one-second resolution."""
+   """
+   Implements a countdown timer with a one-second resolution.
+   Observers will be notified for each value from the initial value down to 
+   zero, unless the timer is stopped, after which there will be no further
+   notifications. 
+   """
 
    def __init__(self, seconds):
        """Initialize the timer with the given initial time in seconds."""
@@ -15,16 +20,15 @@ class TimerModel(Subject):
        self.set_time(seconds)
 
    def _thread_function(self):
-       """Count down one second at a time.
-          Notify observers at each second and at the end of the timer.
-       """
+       """Count down one second at a time, stopping at zero."""
        while self.running and self.currentTime > 0:
            self.notify()
            time.sleep(1)
            with self.lock:
                self.currentTime -= 1
-       self.running = False
-       self.notify()
+       if self.running:
+           self.running = False
+           self.notify()
 
    def set_time(self, seconds):
        """Set current time to the given value of seconds."""
@@ -69,7 +73,7 @@ if __name__ == '__main__':
     my_timer.start()
     time.sleep(5.5)
 
-    print("Expected output: 9 8 7")
+    print("Expected output: 9 8")
     my_timer.set_time(10)
     time.sleep(2)
     my_timer.stop()
