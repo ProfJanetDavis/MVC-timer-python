@@ -8,8 +8,8 @@ class TimerModel(Subject):
    def __init__(self, seconds):
        """Initialize the timer with the given initial time in seconds."""
        self.currentTime = 0     # Invariant: currentTime >= 0
-       self.running = False     # True when thread is running
-       self.thread = threading.Thread(target=self._thread_function) 
+       self.running = False     # True when a thread is running
+       self.thread = None       
        self.lock = threading.Lock()
        self.observers = []
        self.set_time(seconds)
@@ -19,10 +19,10 @@ class TimerModel(Subject):
           Notify observers at each second and at the end of the timer.
        """
        while self.running and self.currentTime > 0:
+           self.notify()
            time.sleep(1)
            with self.lock:
                self.currentTime -= 1
-           self.notify()
        self.running = False
        self.notify()
 
@@ -35,14 +35,14 @@ class TimerModel(Subject):
    def start(self):
        """Start the timer."""
        self.running = True
+       self.thread = threading.Thread(target=self._thread_function) 
        self.thread.start()
-       self.notify()
 
    def stop(self):
        """Stop the timer."""
-       self.running = False
-       self.thread.join()
-       self.notify()
+       if self.running:
+           self.running = False
+           self.thread.join()
    
    def attach(self, observer):
        """Add an observer."""
@@ -57,8 +57,23 @@ class TimerModel(Subject):
        for o in self.observers:
            o.update(self)
 
+class TestObserver(Observer):
+    def update(self, subject):
+        print(subject.currentTime)
+
 if __name__ == '__main__':
-    timer = TimerModel(10)
-    timer.start()
-    print("Liftoff!")
-    timer.stop()
+    my_timer = TimerModel(10)
+    my_timer.attach(TestObserver())
+
+    print("Expected output: 10 9 8 7 6 5")
+    my_timer.start()
+    time.sleep(5.5)
+
+    print("Expected output: 9 8 7")
+    my_timer.set_time(10)
+    time.sleep(2)
+    my_timer.stop()
+
+    print("Expected output: 3 2 1 0")
+    my_timer.set_time(3)
+    my_timer.start()
