@@ -17,6 +17,7 @@ class TimerModel(Subject):
            time.sleep(1)
            self.currentTime -= 1
            self.notify()
+       self.running = False
        self.notify()
 
    def start(self):
