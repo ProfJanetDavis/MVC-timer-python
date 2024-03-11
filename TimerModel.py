@@ -10,6 +10,7 @@ class TimerModel(Subject):
        self.currentTime = 0     # Invariant: currentTime >= 0
        self.running = False     # True when thread is running
        self.thread = threading.Thread(target=self._thread_function) 
+       self.lock = threading.Lock()
        self.observers = []
        self.set_time(seconds)
 
@@ -19,7 +20,8 @@ class TimerModel(Subject):
        """
        while self.running and self.currentTime > 0:
            time.sleep(1)
-           self.currentTime -= 1
+           with self.lock:
+               self.currentTime -= 1
            self.notify()
        self.running = False
        self.notify()
@@ -27,7 +29,8 @@ class TimerModel(Subject):
    def set_time(self, seconds):
        """Set current time to the given value of seconds."""
        assert seconds > 0, "Time in seconds must be positive"
-       self.currentTime = seconds
+       with self.lock:
+           self.currentTime = seconds
 
    def start(self):
        """Start the timer."""
