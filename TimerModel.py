@@ -6,9 +6,10 @@ class TimerModel(Subject):
    """Implements a countdown timer."""
 
    def __init__(self, seconds):
+       assert seconds > 0, "Initial time in seconds must be positive"
        self.initialTime = seconds
-       self.currentTime = 0
-       self.running = False
+       self.currentTime = 0     # Invariant: 0 <= currentTime <= initialTime
+       self.running = False     # True when thread is running
        self.thread = threading.Thread(target=self._thread_function) 
        self.observers = []
 
