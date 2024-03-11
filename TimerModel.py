@@ -25,7 +25,7 @@ class TimerModel(Subject):
        self.notify()
 
    def set_time(self, seconds):
-       """Set both current and initial time to the given value of seconds."""
+       """Set current time to the given value of seconds."""
        assert seconds > 0, "Time in seconds must be positive"
        self.currentTime = seconds
 
