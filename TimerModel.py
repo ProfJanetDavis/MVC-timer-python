@@ -6,7 +6,7 @@ class TimerModel(Subject):
    """Implements a countdown timer."""
 
    def __init__(self, seconds):
-       self.startTime = seconds
+       self.initialTime = seconds
        self.currentTime = 0
        self.running = False
        self.thread = threading.Thread(target=self._thread_function) 
@@ -22,7 +22,7 @@ class TimerModel(Subject):
 
    def start(self):
        self.running = True
-       self.currentTime = self.startTime
+       self.currentTime = self.initialTime
        self.thread.start()
        self.notify()
 
