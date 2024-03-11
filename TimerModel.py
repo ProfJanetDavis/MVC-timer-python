@@ -11,7 +11,7 @@ class TimerModel():
        self.thread = threading.Thread(target=self._thread_function) 
 
    def _thread_function(self):
-       while self.currentTime > 0:
+       while self.running and self.currentTime > 0:
            time.sleep(1)
            self.currentTime -= 1
            print(self.currentTime)
@@ -29,3 +29,4 @@ if __name__ == '__main__':
     timer = TimerModel(10)
     timer.start()
     print("Liftoff!")
+    timer.stop()
