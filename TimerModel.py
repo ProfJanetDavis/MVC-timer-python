@@ -66,19 +66,30 @@ class TestObserver(Observer):
 
 if __name__ == '__main__':
     my_timer = TimerModel()
-    my_timer.set_time(10)
     my_timer.attach(TestObserver())
 
+    print("Expected output: 0")
+    my_timer.start()
+    time.sleep(1)
+    assert not my_timer.running
+
     print("Expected output: 10 9 8 7 6 5")
+    my_timer.set_time(10)
     my_timer.start()
     time.sleep(5.5)
+    assert my_timer.running
 
     print("Expected output: 9 8")
     my_timer.set_time(10)
     time.sleep(2)
+    assert my_timer.running
     my_timer.stop()
     my_timer.stop()
+    assert not my_timer.running
 
     print("Expected output: 3 2 1 0")
     my_timer.set_time(3)
     my_timer.start()
+    assert my_timer.running
+    time.sleep(5)
+    assert not my_timer.running
