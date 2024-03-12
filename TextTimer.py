@@ -1,8 +1,8 @@
 from threading import Thread
 from time import sleep
-from TimerController import TimerController
+from TimerController import TimerController, TimerView
 
-class TextTimer:
+class TextTimer(TimerView):
 
     def main(self):
         """Run the text-based timer."""

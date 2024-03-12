@@ -1,9 +1,22 @@
-from enum import Enum
+from abc import ABC, abstractmethod
 from TimerModel import TimerModel
 from ObserverPattern import Observer
 
+class TimerView(ABC):
+    """Displays the timer."""
+    
+    @abstractmethod
+    def update_time(self):
+        """Called when the timer value may have changed."""
+        pass
+
+    @abstractmethod
+    def timer_done(self):
+        """Called when the timer has value 0."""
+        pass
+
 class TimerController(Observer):
-    """Decouples the model from the view."""
+    """Starts, stops, and pauses the timer model. Updates the timer view."""
 
     def __init__(self, view):
         self._running = False
