@@ -1,12 +1,12 @@
 import tkinter as tk
 from tkinter import ttk
 from abc import ABC, abstractmethod
-from TimerController import TimerController, TimerView
+from controller import TimerController, TimerView
 
 # Fixed up from AI generated code
 # See https://chat.openai.com/share/35e48a9c-ba3f-461e-bc01-633ef4343eff
 
-class GuiTimer(TimerView):
+class GuiTimerView(TimerView):
     """A graphical timer application."""
 
     def __init__(self):
@@ -120,7 +120,5 @@ class GuiTimer(TimerView):
             self.controller.pause()
             self.pause_button.config(text="Resume")
 
-# Example usage:
 if __name__ == "__main__":
-    GuiTimer().run()
-
+    GuiTimerView().run()

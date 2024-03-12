@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from TimerModel import TimerModel
-from ObserverPattern import Observer
+from observer import Observer
+from model import TimerModel
 
 class TimerView(ABC):
     """Displays the timer."""
@@ -12,7 +12,7 @@ class TimerView(ABC):
 
     @abstractmethod
     def timer_done(self):
-        """Called when the timer has value 0."""
+        """Called when the timer reaches 0."""
         pass
 
 class TimerController(Observer):

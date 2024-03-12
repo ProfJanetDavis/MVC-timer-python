@@ -2,8 +2,8 @@ import unittest
 
 from io import StringIO
 from time import sleep
-from ObserverPattern import Observer
-from TimerModel import TimerModel
+from observer import Observer
+from model import TimerModel
 
 class TestObserver(Observer):
     def __init__(self, writer):

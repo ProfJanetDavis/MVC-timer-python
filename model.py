@@ -1,6 +1,6 @@
 from threading import Thread, Lock
 from time import sleep
-from ObserverPattern import Subject, Observer
+from observer import Subject, Observer
 
 class TimerModel(Subject):
     """
