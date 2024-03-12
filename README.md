@@ -1,4 +1,5 @@
-Example MVC application developed by [@ProfJanetDavis](https://github.com/ProfJanetDavis) for [CS 370 at Whitman College](https://github.com/whitmancs370).
+**A simple countdown timer application.**
+Developed as a straightforward example of the MVC architecture by [@ProfJanetDavis](https://github.com/ProfJanetDavis) for [CS 370 at Whitman College](https://github.com/whitmancs370).
 
 # Usage
 - `python3 timer.py gui` runs a graphical timer application.
