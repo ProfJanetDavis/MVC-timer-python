@@ -1,14 +1,16 @@
 Example MVC application developed by [@ProfJanetDavis](https://github.com/ProfJanetDavis) for [CS 370 at Whitman College](https://github.com/whitmancs370).
 
 # Usage
-- `python3 TextTimer.py` runs a text-based timer in the terminal
-- `python3 GuiTimer.py` runs a graphical timer app
+- `python3 TextTimer.py` runs a text-based timer in the terminal.
+- `python3 GuiTimer.py` runs a graphical timer app.
+- `python3 test_TimerModel.py` runs model unit tests.
 
 # Files
 These files are listed in implementation order and recommended reading order.
 - `ObserverPattern.py` demonstrates the use of the Observer pattern in an abstract context. Provides abstract bases classes for Subject and Observer.
 - `ThreadExample.py` shows how to use the `threading library` for concurrency.
-- `TimerModel.py` implements a countdown timer using threads and the Observer pattern. Self-contained; can be tested by invoking `python3 TimerModel.py`.
+- `TimerModel.py` implements a countdown timer using threads and the Observer pattern. 
+- `test_TimerModel.py` tests the TimerModel using the `unittest` framework.
 - `TimerController.py` defines the controller and an abstract base class for the view.
 - `TextTimer.py` defines a text-based view.
 - `GuiTimer.py` defines a graphical view using the `tkinter` library.
