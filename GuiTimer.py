@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from TimerController import TimerController, TimerView
 
 # Fixed up from AI generated code
-# See https://chat.openai.com/share/aa013669-d876-4477-bb3e-fe60c95847d9
+# See https://chat.openai.com/share/35e48a9c-ba3f-461e-bc01-633ef4343eff
 
 class GuiTimer(TimerView):
     """A graphical timer application."""
@@ -18,6 +18,7 @@ class GuiTimer(TimerView):
 
         self.root = tk.Tk()
         self.root.title("Timer")
+        self.root.protocol("WM_DELETE_WINDOW", self.quit)
         
         self.timer_label = ttk.Label(self.root, text="00:00", font=("Helvetica", "36"))
         self.timer_label.grid(row=0, column=1, rowspan=2, padx=10, pady=10)
@@ -43,6 +44,15 @@ class GuiTimer(TimerView):
         self.pause_button = ttk.Button(self.root, text="Pause", command=self.pause, state="disabled")
         self.pause_button.grid(row=2, column=2, padx=5, pady=5)
         
+    def run(self):
+        """Run the application."""
+        self.root.mainloop()
+
+    def quit(self):
+        """Quit the application."""
+        self.controller.stop()
+        self.root.destroy()
+
     def increment_minutes(self):
         """Increment minutes by 1. Called on minutes up button press."""
         self.minutes += 1
@@ -109,10 +119,6 @@ class GuiTimer(TimerView):
         else:
             self.controller.pause()
             self.pause_button.config(text="Resume")
-        
-    def run(self):
-        """Run the application."""
-        self.root.mainloop()
 
 # Example usage:
 if __name__ == "__main__":
