@@ -10,14 +10,13 @@ class TimerModel(Subject):
    notifications. 
    """
 
-   def __init__(self, seconds):
-       """Initialize the timer with the given initial time in seconds."""
+   def __init__(self):
+       """Initialize the timer."""
        self.currentTime = 0     # Invariant: currentTime >= 0
        self.running = False     # True when a thread is running
        self.thread = None       
        self.lock = threading.Lock()
        self.observers = []
-       self.set_time(seconds)
 
    def _thread_function(self):
        """Count down one second at a time, stopping at zero."""
@@ -37,13 +36,13 @@ class TimerModel(Subject):
            self.currentTime = seconds
 
    def start(self):
-       """Start the timer."""
+       """Start the timer from the current time."""
        self.running = True
        self.thread = threading.Thread(target=self._thread_function) 
        self.thread.start()
 
    def stop(self):
-       """Stop the timer."""
+       """Stop the timer, retaining the current time."""
        if self.running:
            self.running = False
            self.thread.join()
@@ -66,7 +65,8 @@ class TestObserver(Observer):
         print(subject.currentTime)
 
 if __name__ == '__main__':
-    my_timer = TimerModel(10)
+    my_timer = TimerModel()
+    my_timer.set_time(10)
     my_timer.attach(TestObserver())
 
     print("Expected output: 10 9 8 7 6 5")
