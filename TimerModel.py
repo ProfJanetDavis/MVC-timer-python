@@ -6,7 +6,7 @@ class TimerModel(Subject):
    """
    Implements a countdown timer with a one-second resolution.
    Observers will be notified for each value from the initial value down to 
-   zero, unless the timer is stopped, after which there will be no further
+   zero, unless the thread is stopped, after which there will be no further
    notifications. 
    """
 
@@ -18,7 +18,7 @@ class TimerModel(Subject):
        self.lock = threading.Lock()
        self.observers = []
 
-   def _countdown(self):
+   def _timer(self):
        """
        Count down one second at a time, stopping at zero.
        This function should always be run in a new thread.
@@ -38,13 +38,13 @@ class TimerModel(Subject):
        with self.lock:
            self.currentTime = seconds
 
-   def start(self):
+   def startThread(self):
        """Start the timer from the current time."""
        self.running = True
-       self.thread = threading.Thread(target=self._countdown) 
+       self.thread = threading.Thread(target=self._timer) 
        self.thread.start()
 
-   def stop(self):
+   def stopThread(self):
        """Stop the timer, retaining the current time."""
        if self.running:
            self.running = False
@@ -72,13 +72,13 @@ if __name__ == '__main__':
     myTimer.attach(TestObserver())
 
     print("Expected output: 0")
-    myTimer.start()
+    myTimer.startThread()
     time.sleep(1)
     assert not myTimer.running
 
     print("Expected output: 10 9 8 7 6 5")
     myTimer.setTime(10)
-    myTimer.start()
+    myTimer.startThread()
     time.sleep(5.5)
     assert myTimer.running
 
@@ -86,8 +86,8 @@ if __name__ == '__main__':
     myTimer.setTime(10)
     time.sleep(2)
     assert myTimer.running
-    myTimer.stop()
-    myTimer.stop()
+    myTimer.stopThread()
+    myTimer.stopThread()
     assert not myTimer.running
 
     print("No output for 5 seconds")
@@ -95,7 +95,7 @@ if __name__ == '__main__':
 
     print("Expected output: 3 2 1 0")
     myTimer.setTime(3)
-    myTimer.start()
+    myTimer.startThread()
     assert myTimer.running
     time.sleep(5)
     assert not myTimer.running
