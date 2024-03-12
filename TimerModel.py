@@ -52,13 +52,13 @@ class TimerModel(Subject):
            self._running = False
            self.notify()
 
-   def startThread(self):
+   def start_thread(self):
        """Start the timer from the current time."""
        self._running = True
        self._thread = Thread(target=self._timer) 
        self._thread.start()
 
-   def stopThread(self):
+   def stop_thread(self):
        """Stop the timer, retaining the current time."""
        if self._running:
            self._running = False
@@ -82,36 +82,36 @@ class TestObserver(Observer):
         print(subject._time)
 
 if __name__ == '__main__':
-    myTimer = TimerModel()
-    myTimer.attach(TestObserver())
+    my_timer = TimerModel()
+    my_timer.attach(TestObserver())
 
     print("Expected output: 0")
-    myTimer.startThread()
+    my_timer.start_thread()
     sleep(1)
-    assert not myTimer.running
+    assert not my_timer.running
 
     print("Expected output: 10 9 8 7 6 5")
-    myTimer.time = 10
-    myTimer.startThread()
+    my_timer.time = 10
+    my_timer.start_thread()
     sleep(5.5)
-    assert myTimer.running
+    assert my_timer.running
 
     print("Expected output: 9 8")
-    myTimer.time = 10
+    my_timer.time = 10
     sleep(2)
-    assert myTimer.running
-    myTimer.stopThread()
-    myTimer.stopThread()
-    assert not myTimer.running
+    assert my_timer.running
+    my_timer.stop_thread()
+    my_timer.stop_thread()
+    assert not my_timer.running
 
     print("No output for 5 seconds")
     sleep(5)
 
     print("Expected output: 3 2 1 0")
-    myTimer.time = 3
-    myTimer.startThread()
-    assert myTimer.running
+    my_timer.time = 3
+    my_timer.start_thread()
+    assert my_timer.running
     sleep(5)
-    assert not myTimer.running
+    assert not my_timer.running
     
     print("Tests completed")
