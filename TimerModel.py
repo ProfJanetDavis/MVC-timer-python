@@ -18,8 +18,11 @@ class TimerModel(Subject):
        self.lock = threading.Lock()
        self.observers = []
 
-   def _thread_function(self):
-       """Count down one second at a time, stopping at zero."""
+   def _countdown(self):
+       """
+       Count down one second at a time, stopping at zero.
+       This function should always be run in a new thread.
+       """
        while self.running and self.currentTime > 0:
            self.notify()
            time.sleep(1)
@@ -29,7 +32,7 @@ class TimerModel(Subject):
            self.running = False
            self.notify()
 
-   def set_time(self, seconds):
+   def setTime(self, seconds):
        """Set current time to the given value of seconds."""
        assert seconds > 0, "Time in seconds must be positive"
        with self.lock:
@@ -38,7 +41,7 @@ class TimerModel(Subject):
    def start(self):
        """Start the timer from the current time."""
        self.running = True
-       self.thread = threading.Thread(target=self._thread_function) 
+       self.thread = threading.Thread(target=self._countdown) 
        self.thread.start()
 
    def stop(self):
@@ -65,31 +68,33 @@ class TestObserver(Observer):
         print(subject.currentTime)
 
 if __name__ == '__main__':
-    my_timer = TimerModel()
-    my_timer.attach(TestObserver())
+    myTimer = TimerModel()
+    myTimer.attach(TestObserver())
 
     print("Expected output: 0")
-    my_timer.start()
+    myTimer.start()
     time.sleep(1)
-    assert not my_timer.running
+    assert not myTimer.running
 
     print("Expected output: 10 9 8 7 6 5")
-    my_timer.set_time(10)
-    my_timer.start()
+    myTimer.setTime(10)
+    myTimer.start()
     time.sleep(5.5)
-    assert my_timer.running
+    assert myTimer.running
 
     print("Expected output: 9 8")
-    my_timer.set_time(10)
+    myTimer.setTime(10)
     time.sleep(2)
-    assert my_timer.running
-    my_timer.stop()
-    my_timer.stop()
-    assert not my_timer.running
+    assert myTimer.running
+    myTimer.stop()
+    myTimer.stop()
+    assert not myTimer.running
 
     print("Expected output: 3 2 1 0")
-    my_timer.set_time(3)
-    my_timer.start()
-    assert my_timer.running
+    myTimer.setTime(3)
+    myTimer.start()
+    assert myTimer.running
     time.sleep(5)
-    assert not my_timer.running
+    assert not myTimer.running
+    
+    print("Tests completed")
