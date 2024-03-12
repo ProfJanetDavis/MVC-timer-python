@@ -77,6 +77,7 @@ if __name__ == '__main__':
     my_timer.set_time(10)
     time.sleep(2)
     my_timer.stop()
+    my_timer.stop()
 
     print("Expected output: 3 2 1 0")
     my_timer.set_time(3)
