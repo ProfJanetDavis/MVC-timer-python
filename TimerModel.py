@@ -90,6 +90,9 @@ if __name__ == '__main__':
     myTimer.stop()
     assert not myTimer.running
 
+    print("No output for 5 seconds")
+    time.sleep(5)
+
     print("Expected output: 3 2 1 0")
     myTimer.setTime(3)
     myTimer.start()
