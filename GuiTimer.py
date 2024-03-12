@@ -57,21 +57,13 @@ class GuiTimer(TimerView):
     def increment_seconds(self):
         """Increment seconds by 5. Called on seconds up button press."""
         self.seconds += 5
-        if self.seconds >= 60:
-            self.seconds = 0
-            self.increment_minutes()
+        self.seconds %= 60
         self.display_time()
         
     def decrement_seconds(self):
         """Decrement seconds by 5. Called on seconds down button press."""
-        if self.seconds >= 5:
-            self.seconds -= 5
-        else:
-            if self.minutes > 0:
-                self.minutes -= 1
-                self.seconds = 55
-            else:
-                self.seconds = 0
+        self.seconds -= 5
+        self.seconds %= 60
         self.display_time()
         
     def display_time(self):
