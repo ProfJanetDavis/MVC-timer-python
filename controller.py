@@ -4,15 +4,20 @@ from model import TimerModel
 
 class TimerView(ABC):
     """Displays the timer."""
+
+    @abstractmethod
+    def run(self):
+        """Called by a client to run the view."""
+        pass
     
     @abstractmethod
     def update_time(self):
-        """Called when the timer value may have changed."""
+        """Called by the controller when the timer value may have changed."""
         pass
 
     @abstractmethod
     def timer_done(self):
-        """Called when the timer reaches 0."""
+        """Called by the controller when the timer reaches 0."""
         pass
 
 class TimerController(Observer):

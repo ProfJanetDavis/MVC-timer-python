@@ -1,8 +1,8 @@
 Example MVC application developed by [@ProfJanetDavis](https://github.com/ProfJanetDavis) for [CS 370 at Whitman College](https://github.com/whitmancs370).
 
 # Usage
-- `python3 view_text.py` runs a text-based timer in the terminal.
-- `python3 view_gui.py` runs a graphical timer app.
+- `python3 timer.py gui` runs a graphical timer application.
+- `python3 timer.py text` runs a text-based timer in the terminal.
 - `python3 test_model.py` runs model unit tests.
 
 # Files
@@ -14,6 +14,7 @@ These files are listed in implementation order and recommended reading order.
 - `controller.py` defines the controller and an abstract base class for the view.
 - `view_text.py` implements a text-based timer.
 - `view_gui.py` implements a graphical timer using the `tkinter` library.
+- `timer.py` is the main application, which runs either the graphical or text-based timer depending on command-line arguments.
 
 # Exercises
 1. Read and run all Python files. Follow the links in the documentation. What questions do you have?
