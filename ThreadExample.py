@@ -1,4 +1,5 @@
 # Source: https://realpython.com/intro-to-python-threading/
+# See also: https://docs.python.org/3/library/threading.html
 
 import logging
 import threading
