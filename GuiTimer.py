@@ -7,11 +7,14 @@ from TimerController import TimerController, TimerView
 # See https://chat.openai.com/share/aa013669-d876-4477-bb3e-fe60c95847d9
 
 class GuiTimer(TimerView):
+    """A graphical timer application."""
+
     def __init__(self):
+        """Set up application window and other state."""
 
         self.controller = TimerController(self)
-        self.minutes = 0
-        self.seconds = 0
+        self.minutes = 0    # Must be non-negative
+        self.seconds = 0    # Must be in the range 0..59, inclusive
 
         self.root = tk.Tk()
         self.root.title("Timer")
@@ -41,15 +44,18 @@ class GuiTimer(TimerView):
         self.pause_button.grid(row=2, column=2, padx=5, pady=5)
         
     def increment_minutes(self):
+        """Increment minutes by 1. Called on minutes up button press."""
         self.minutes += 1
         self.display_time()
         
     def decrement_minutes(self):
+        """Decrement minutes by 1. Called on minutes down button press."""
         if self.minutes > 0:
             self.minutes -= 1
             self.display_time()
         
     def increment_seconds(self):
+        """Increment seconds by 5. Called on seconds up button press."""
         self.seconds += 5
         if self.seconds >= 60:
             self.seconds = 0
@@ -57,6 +63,7 @@ class GuiTimer(TimerView):
         self.display_time()
         
     def decrement_seconds(self):
+        """Decrement seconds by 5. Called on seconds down button press."""
         if self.seconds >= 5:
             self.seconds -= 5
         else:
@@ -68,20 +75,24 @@ class GuiTimer(TimerView):
         self.display_time()
         
     def display_time(self):
+        """Display the time stored by this object."""
         time_str = f"{self.minutes:02d}:{self.seconds:02d}"
         self.timer_label.config(text=time_str)
 
     def update_time(self, time_in_seconds):
+        """Update the time stored by this object. Called by the controller."""
         self.minutes = time_in_seconds // 60
         self.seconds = time_in_seconds % 60
         self.display_time()
 
     def timer_done(self):
+        """Indicate the timer is done. Called by the controller.""" 
         self.start_button.config(state="normal")
         self.stop_button.config(state="disabled")
         self.pause_button.config(state="disabled")
         
     def start(self):
+        """Start the timer."""
         time_in_seconds = 60*self.minutes + self.seconds
         self.controller.start(time_in_seconds)
         self.start_button.config(state="disabled")
@@ -89,6 +100,7 @@ class GuiTimer(TimerView):
         self.pause_button.config(state="normal")
         
     def stop(self):
+        """Stop the timer."""
         self.start_button.config(state="normal")
         self.stop_button.config(state="disabled")
         self.pause_button.config(text="Pause", state="disabled")
@@ -98,14 +110,16 @@ class GuiTimer(TimerView):
         self.controller.stop()
         
     def pause(self):
-        if self.controller.running():
-            self.controller.pause()
-            self.pause_button.config(text="Resume")
-        else:
+        """Pause the timer, or resume if already paused.."""
+        if self.controller.paused():
             self.controller.resume()
             self.pause_button.config(text="Pause")
+        else:
+            self.controller.pause()
+            self.pause_button.config(text="Resume")
         
     def run(self):
+        """Run the application."""
         self.root.mainloop()
 
 # Example usage:
