@@ -1,5 +1,5 @@
-import threading
-import time
+from threading import Thread, Lock
+from time import sleep
 from ObserverPattern import Subject, Observer
 
 class TimerModel(Subject):
@@ -15,7 +15,7 @@ class TimerModel(Subject):
        self.currentTime = 0     # Invariant: currentTime >= 0
        self.running = False     # True when a thread is running
        self.thread = None       
-       self.lock = threading.Lock()
+       self.lock = Lock()
        self.observers = []
 
    def _timer(self):
@@ -25,7 +25,7 @@ class TimerModel(Subject):
        """
        while self.running and self.currentTime > 0:
            self.notify()
-           time.sleep(1)
+           sleep(1)
            with self.lock:
                self.currentTime -= 1
        if self.running:
@@ -41,7 +41,7 @@ class TimerModel(Subject):
    def startThread(self):
        """Start the timer from the current time."""
        self.running = True
-       self.thread = threading.Thread(target=self._timer) 
+       self.thread = Thread(target=self._timer) 
        self.thread.start()
 
    def stopThread(self):
@@ -73,31 +73,31 @@ if __name__ == '__main__':
 
     print("Expected output: 0")
     myTimer.startThread()
-    time.sleep(1)
+    sleep(1)
     assert not myTimer.running
 
     print("Expected output: 10 9 8 7 6 5")
     myTimer.setTime(10)
     myTimer.startThread()
-    time.sleep(5.5)
+    sleep(5.5)
     assert myTimer.running
 
     print("Expected output: 9 8")
     myTimer.setTime(10)
-    time.sleep(2)
+    sleep(2)
     assert myTimer.running
     myTimer.stopThread()
     myTimer.stopThread()
     assert not myTimer.running
 
     print("No output for 5 seconds")
-    time.sleep(5)
+    sleep(5)
 
     print("Expected output: 3 2 1 0")
     myTimer.setTime(3)
     myTimer.startThread()
     assert myTimer.running
-    time.sleep(5)
+    sleep(5)
     assert not myTimer.running
     
     print("Tests completed")
