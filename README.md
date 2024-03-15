@@ -24,4 +24,5 @@ These files are listed in implementation order and recommended reading order.
 4. In the graphical timer view, what happens if you push the time setting buttons while the timer is running? Come up with at least two different ways you could prevent the unexpected behavior, and implement one of them. 
 5. In the graphical view, the code to enable and disable buttons is repetitive. Tidy up to eliminate the duplication.
 6. Modify the GUI to use Unicode characters or images for play, stop, and pause: ▶ ⏹ ⏸. Research how to display the pause button as either raised or sunken depending on whether the timer is currently paused.
-7. Use the [curses](https://docs.python.org/3/library/curses.html) module to make an improved timer view for the terminal.
+7. Use the built-in [curses](https://docs.python.org/3/library/curses.html) module to make an improved timer view for the terminal.
+8. Use the [flask](https://flask.palletsprojects.com/en/3.0.x/) framework to create a web interface for your timer. 
