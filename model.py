@@ -1,8 +1,9 @@
 from threading import Thread, Lock
 from time import sleep
+from mvc import TimerModel
 from observer import Subject, Observer
 
-class TimerModel(Subject):
+class ThreadTimerModel(TimerModel,Subject):
     """
     Implements a countdown timer with a one-second resolution.
     Observers will be notified for each value from the initial value down to 
@@ -17,9 +18,6 @@ class TimerModel(Subject):
         self._thread = None       
         self._lock = Lock()
         self._observers = []
-
-    # See documentation for properties:
-    # https://realpython.com/python-getter-setter/#using-properties-instead-of-getters-and-setters-the-python-way
 
     @property 
     def time(self):
@@ -52,13 +50,13 @@ class TimerModel(Subject):
             self._running = False
             self.notify()
 
-    def start_thread(self):
+    def start_timer(self):
         """Start the timer from the current time."""
         self._running = True
         self._thread = Thread(target=self._timer) 
         self._thread.start()
 
-    def stop_thread(self):
+    def stop_timer(self):
         """Stop the timer, retaining the current time."""
         if self._running:
             self._running = False
