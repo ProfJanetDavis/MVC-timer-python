@@ -3,7 +3,7 @@ import unittest
 from io import StringIO
 from time import sleep
 from observer import Observer
-from model import ThreadTimerModel
+from model_thread import ThreadTimerModel
 
 class TestObserver(Observer):
     def __init__(self, writer):

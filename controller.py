@@ -1,6 +1,5 @@
-from mvc import TimerView
+from mvc import TimerModel, TimerView
 from observer import Observer
-from model import ThreadTimerModel
 
 class TimerController(Observer):
     """Starts, stops, and pauses the timer model. Updates the timer view."""

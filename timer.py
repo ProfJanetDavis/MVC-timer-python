@@ -1,5 +1,5 @@
 from sys import argv
-from model import ThreadTimerModel
+from model_thread import ThreadTimerModel
 from view_text import TextTimerView
 from view_gui import GuiTimerView
 
