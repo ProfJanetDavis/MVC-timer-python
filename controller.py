@@ -5,11 +5,11 @@ from model import ThreadTimerModel
 class TimerController(Observer):
     """Starts, stops, and pauses the timer model. Updates the timer view."""
 
-    def __init__(self, view):
+    def __init__(self, model, view):
         self._running = False
         self._paused = False
         self._view = view
-        self._model = ThreadTimerModel()
+        self._model = model
         self._model.attach(self)
 
     def update(self, timer):

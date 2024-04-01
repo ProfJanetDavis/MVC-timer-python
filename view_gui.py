@@ -9,10 +9,10 @@ from controller import TimerController, TimerView
 class GuiTimerView(TimerView):
     """A graphical timer application."""
 
-    def __init__(self):
+    def __init__(self, model):
         """Set up application window and other state."""
 
-        self.controller = TimerController(self)
+        self.controller = TimerController(model, self)
         self.minutes = 0    # Must be non-negative
         self.seconds = 0    # Must be in the range 0..59, inclusive
 

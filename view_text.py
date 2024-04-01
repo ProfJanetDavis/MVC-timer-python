@@ -4,12 +4,14 @@ from controller import TimerController, TimerView
 
 class TextTimerView(TimerView):
 
+    def __init__(self, model):
+        self._controller = TimerController(model, self)
+
     def run(self):
         """Run the text-based timer."""
         time = self._getTimeFromUser()
         self._thread = Thread(target=self._input_loop, daemon=True)
         self._thread.start()
-        self._controller = TimerController(self)
         self._controller.start(time)
         while not self._controller.stopped():
             sleep(1)
@@ -44,6 +46,3 @@ class TextTimerView(TimerView):
             self._controller.pause()
             input()
             self._controller.resume()
-
-if __name__ == '__main__':
-    TextTimerView().run()
