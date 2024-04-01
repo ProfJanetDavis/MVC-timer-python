@@ -23,6 +23,7 @@ class TimerModel(ABC):
     Models a timer.
     """
 
+    @abstractmethod
     def __init__(self):
         """Initialize the timer."""
         pass
@@ -42,10 +43,12 @@ class TimerModel(ABC):
         """True if the timer is running"""
         return False
 
+    @abstractmethod
     def start_timer(self):
         """Start the timer from the current time."""
         pass
 
+    @abstractmethod
     def stop_timer(self):
         """Stop the timer, retaining the current time."""
         pass
